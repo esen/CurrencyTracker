@@ -22,3 +22,4 @@ group :assets do
 end
 
 gem 'jquery-rails', '~> 2.2.0'
+gem 'chartkick'

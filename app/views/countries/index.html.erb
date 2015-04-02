@@ -20,6 +20,9 @@
   <input type="button" name="check_all" id="check_all" value="Check All"/>
   <input type="button" name="visit" id="visit" value="Visit"/>
 
+  <br/><br/><br/>
+  <%= line_chart Country.visited(current_user).group("strftime('%Y-%m-%d', visitations.created_at)").count %>
+
   <table>
     <tr>
       <th>Name</th>
