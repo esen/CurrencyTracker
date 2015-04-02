@@ -5,11 +5,13 @@ CurrencyTracker::Application.routes.draw do
   
   resources :countries, :except => [:new, :destroy] do
     post 'update_visited', :on => :member
+    post 'update_visited', :on => :collection
     get 'search', :on => :collection
   end
 
   resources :currencies, :only => [:index, :show] do
     post 'update_collected', :on => :member
+    post 'update_collected', :on => :collection
     get 'search', :on => :collection
   end
 

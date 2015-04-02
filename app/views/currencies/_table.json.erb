@@ -1,0 +1,8 @@
+  <% @currencies.each do |currency| %>
+    <tr>
+      <td><%= currency.name %></td>
+      <td><%= currency.code %></td>
+      <td><input type="checkbox" class="collected" name="<%= currency.id %>" <%= currency.collected? ? 'checked' : '' %>/></td>
+      <td><%= link_to 'Show', currency %></td>
+    </tr>
+  <% end %>

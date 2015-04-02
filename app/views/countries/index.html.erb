@@ -3,33 +3,32 @@
     <table>
       <tr>
         <th>Visited</th>
-        <td><%= Country.visited.count %></td>
+        <td><%= Country.visited(current_user).count %></td>
       </tr><tr>
         <th>Not Visited</th>
-        <td><%= Country.not_visited.count %></td>
+        <td><%= Country.not_visited(current_user).count %></td>
       </tr>
     </table>
   </div>
 
   <h1>Countries</h1>
 
+  <br/><br/><br/>
+  <input type="text" name="filter" id="filter"/>
+  <input type="button" name="submit" id="submit_filter" value="Filter"/>
+  &nbsp;&nbsp;&nbsp;
+  <input type="button" name="check_all" id="check_all" value="Check All"/>
+  <input type="button" name="visit" id="visit" value="Visit"/>
+
   <table>
     <tr>
       <th>Name</th>
       <th>Code</th>
-      <th>Status</th>
+      <th>Visited</th>
       <th></th>
       <th></th>
     </tr>
-
-  <% @countries.each do |country| %>
-    <tr>
-      <td><%= country.name %></td>
-      <td><%= country.code %></td>
-      <td><%= country.visited? ? 'Visited' : 'Not Visited' %></td>
-      <td><%= link_to 'Show', country %></td>
-      <td><%= link_to 'Edit', edit_country_path(country) %></td>
-    </tr>
-  <% end %>
+    <tbody  id="countries_table">
+    </tbody>
   </table>
 </section>

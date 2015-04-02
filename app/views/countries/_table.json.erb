@@ -1,0 +1,9 @@
+<% @countries.each do |country| %>
+  <tr>
+    <td><%= country.name %></td>
+    <td><%= country.code %></td>
+    <td><input type="checkbox" class="visited" name="<%= country.id %>" <%= country.visited? ? 'checked' : '' %>/></td>
+    <td><%= link_to 'Show', country %></td>
+    <td><%= link_to 'Edit', country %></td>
+  </tr>
+<% end %>

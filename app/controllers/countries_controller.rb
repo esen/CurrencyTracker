@@ -79,24 +79,31 @@ class CountriesController < ApplicationController
   def update_visited
     respond_to do |format|
       format.json do
-        @country = Country.find(params[:id])
-        country_visited = @country.visitations.where(:user_id => current_user.id).count > 0
-        new_visited_value = params[:visited] == 'true'
+        @country = Country.find(params[:id]) rescue nil
 
         success = true
 
-        if country_visited && !new_visited_value
-          success = @country.visitations.where(:user_id => current_user.id).destroy_all
-        elsif !country_visited && new_visited_value
-          visitation = current_user.visitations.new
-          visitation.country_code = @country.code
-          success = visitation.save
+        if @country
+          country_visited = @country.visitations.where(:user_id => current_user.id).count > 0
+          new_visited_value = params[:visited] == 'true'
+
+          if country_visited && !new_visited_value
+            success = @country.visitations.where(:user_id => current_user.id).destroy_all
+          elsif !country_visited && new_visited_value
+            visitation = current_user.visitations.new
+            visitation.country_code = @country.code
+            success = visitation.save
+            visited = 1
+          end
+        else
+          ids = params[:ids] || []
+          visited = visit_all_countries(ids)
         end
 
         if success 
-          render :json => {:status => :OK}
+          render :json => {:status => :OK, :visited_num => visited}
         else
-          render :json => {:status => :ERROR}
+          render :json => {:status => :ERROR, :visited_num => visited}
         end
       end
     end
@@ -110,5 +117,24 @@ class CountriesController < ApplicationController
         render :partial => "countries/table", :countries => @countries, :content_type => :text
       end
     end
+  end
+
+  private
+
+  def visit_all_countries(ids)
+    visited = 0
+    ids.each do |id|
+      country = Country.find(id) rescue nil
+      if country
+        country_visited = country.visitations.where(:user_id => current_user.id).count > 0
+        unless country_visited
+          visitation = current_user.visitations.new
+          visitation.country_code = country.code
+          visited += 1 if visitation.save
+        end
+      end
+    end
+
+    visited
   end
 end

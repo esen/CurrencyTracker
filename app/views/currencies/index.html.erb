@@ -3,31 +3,31 @@
     <table>
       <tr>
         <th>Collected</th>
-        <td><%= Currency.collected.count %></td>
+        <td><%= Currency.collected(current_user).count %></td>
       </tr><tr>
         <th>Not Collected</th>
-        <td><%= Currency.not_collected.count %></td>
+        <td><%= Currency.not_collected(current_user).count %></td>
       </tr>
     </table>
   </div>
 
   <h1>Currencies</h1>
 
+  <br/><br/><br/>
+  <input type="text" name="filter" id="filter"/>
+  <input type="button" name="submit" id="submit_filter" value="Filter"/>
+  &nbsp;&nbsp;&nbsp;
+  <input type="button" name="check_all" id="check_all" value="Check All"/>
+  <input type="button" name="collect" id="collect" value="Collect"/>
+
   <table>
     <tr>
       <th>Name</th>
       <th>Code</th>
-      <th>Status</th>
+      <th>Collected</th>
       <th></th>
     </tr>
-
-  <% @currencies.each do |currency| %>
-    <tr>
-      <td><%= currency.name %></td>
-      <td><%= currency.code %></td>
-      <td><%= currency.collected? ? 'Collected' : 'Not Collected' %></td>
-      <td><%= link_to 'Show', currency %></td>
-    </tr>
-  <% end %>
+    <tbody id="currencies_table">      
+    </tbody>
   </table>
 </section>

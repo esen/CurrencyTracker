@@ -10,12 +10,19 @@ SimplePieChart.initialize = function(root_element) { return new ViewController(r
     this.width  = parseInt( this.root.getAttribute('width') );
     this.height = parseInt( this.root.getAttribute('height') );
 
-    var sets = $(this.root).find('tr');
-    for( var i = 0; i < sets.length; i++ ) {
-      var set_name = $(sets[i]).find('th').html();
-      var set_value = parseInt( $(sets[i]).find('td').html() );
-      this.sets[set_name] = set_value;
+    if (SimplePieChart.sets == undefined) {
+      var sets = $(this.root).find('tr');
+      for( var i = 0; i < sets.length; i++ ) {
+        var set_name = $(sets[i]).find('th').html();
+        var set_value = parseInt( $(sets[i]).find('td').html() );
+        this.sets[set_name] = set_value;
+      }
+
+      SimplePieChart.sets = this.sets;
+    } else {
+      this.sets = SimplePieChart.sets;
     }
+
 
     this.render();
   },
