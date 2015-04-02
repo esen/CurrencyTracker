@@ -6,6 +6,7 @@ gem 'rails', '3.2.15'
 gem 'sqlite3'
 gem 'savon', '~>1.0'
 gem 'nokogiri'
+gem 'devise'
 
 group :development do
   gem 'capybara'

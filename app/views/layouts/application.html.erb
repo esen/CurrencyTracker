@@ -14,9 +14,17 @@
     <ul>
       <li><%= link_to "Currencies", currencies_path %></li>
       <li><%= link_to "Countries", countries_path %></li>
+      <% if user_signed_in? %>
+        <li><%= link_to('Logout', destroy_user_session_path) %></li>
+      <% else %>
+        <li><%= link_to('Login', new_user_session_path)  %></li>
+      <% end %>
     </ul>
   </nav>
 </header>
+
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
 
 <%= yield %>
 
